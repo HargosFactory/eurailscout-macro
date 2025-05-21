@@ -137,8 +137,6 @@ Sub ExportExternalChargesToSAP(collection As ExternalChargeCollection, Optional 
     ' Commencer à partir de la ligne 4 (après les en-têtes)
     row = 4
     
-    Debug.Print collection.Count
-    
     ' Parcourir chaque charge externe et remplir les lignes SAP
     For i = 1 To collection.Count
         Set externalCharge = collection.Item(i)
