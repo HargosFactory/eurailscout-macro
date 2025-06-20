@@ -37,14 +37,14 @@ Sub ParseRow(ws As Worksheet, rowNum As Integer, collection As InternalHourColle
     
     ' Récupérer les valeurs des colonnes
     prestation = ws.Cells(rowNum, 1).value
-    idEOTP = ws.Cells(rowNum, 2).value
-    fonction = ws.Cells(rowNum, 3).value
-    niveauService = ws.Cells(rowNum, 4).value
-    nom = ws.Cells(rowNum, 5).value
-    tjmH = CDbl(ws.Cells(rowNum, 6).value)
-    tjmJ = CDbl(ws.Cells(rowNum, 7).value)
-    tauxFG = CDbl(ws.Cells(rowNum, 8).value)
-    domaineFonctionnel = ws.Cells(rowNum, 21).value
+    idEOTP = ws.Cells(rowNum, 3).value
+    fonction = ws.Cells(rowNum, 4).value
+    niveauService = ws.Cells(rowNum, 5).value
+    nom = ws.Cells(rowNum, 6).value
+    tjmH = CDbl(ws.Cells(rowNum, 7).value)
+    tjmJ = CDbl(ws.Cells(rowNum, 8).value)
+    tauxFG = CDbl(ws.Cells(rowNum, 9).value)
+    domaineFonctionnel = ws.Cells(rowNum, 22).value
     
     ' Créer un objet InternalHour pour chaque mois avec des heures (colonnes 9 à 20)
     For mois = 1 To 12
@@ -52,8 +52,8 @@ Sub ParseRow(ws As Worksheet, rowNum As Integer, collection As InternalHourColle
         heuresMois = 0
         
         ' Vérifier si la cellule contient une valeur
-        If Not IsEmpty(ws.Cells(rowNum, 8 + mois).value) Then
-            heuresMois = CDbl(ws.Cells(rowNum, 8 + mois).value)
+        If Not IsEmpty(ws.Cells(rowNum, 9 + mois).value) Then
+            heuresMois = CDbl(ws.Cells(rowNum, 9 + mois).value)
             
             ' Ne créer un objet que si des heures sont enregistrées pour ce mois
             If heuresMois > 0 Then

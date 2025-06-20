@@ -35,12 +35,12 @@ Sub ParseProductRow(ws As Worksheet, rowNum As Integer, collection As ProductCol
     
     ' Récupérer les valeurs des colonnes
     prestation = ws.Cells(rowNum, 1).Value
-    idEOTP = ws.Cells(rowNum, 2).Value
-    montantAnnuel = CDbl(Replace(ws.Cells(rowNum, 3).Value, "€", ""))
-    produitNom = ws.Cells(rowNum, 4).Value
-    client = ws.Cells(rowNum, 5).Value
-    natureComptable = ws.Cells(rowNum, 6).Value
-    domaineFonctionnel = ws.Cells(rowNum, 21).Value
+    idEOTP = ws.Cells(rowNum, 3).Value
+    montantAnnuel = CDbl(Replace(ws.Cells(rowNum, 4).Value, "€", ""))
+    produitNom = ws.Cells(rowNum, 5).Value
+    client = ws.Cells(rowNum, 6).Value
+    natureComptable = ws.Cells(rowNum, 7).Value
+    domaineFonctionnel = ws.Cells(rowNum, 22).Value
     
     ' Créer un objet Product pour chaque mois avec des montants (colonnes 9 à 20)
     For mois = 1 To 12
@@ -48,12 +48,12 @@ Sub ParseProductRow(ws As Worksheet, rowNum As Integer, collection As ProductCol
         montantMois = 0
         
         ' Vérifier si la cellule contient une valeur
-        If Not IsEmpty(ws.Cells(rowNum, 8 + mois).Value) Then
+        If Not IsEmpty(ws.Cells(rowNum, 9 + mois).Value) Then
             ' Gérer les formats différents (avec ou sans €)
-            If InStr(ws.Cells(rowNum, 8 + mois).Value, "€") > 0 Then
-                montantMois = CDbl(Replace(Replace(ws.Cells(rowNum, 8 + mois).Value, "€", ""), " ", ""))
+            If InStr(ws.Cells(rowNum, 9 + mois).Value, "€") > 0 Then
+                montantMois = CDbl(Replace(Replace(ws.Cells(rowNum, 9 + mois).Value, "€", ""), " ", ""))
             Else
-                montantMois = CDbl(ws.Cells(rowNum, 8 + mois).Value)
+                montantMois = CDbl(ws.Cells(rowNum, 9 + mois).Value)
             End If
             
             ' Ne créer un objet que si des montants sont enregistrés pour ce mois

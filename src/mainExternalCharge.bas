@@ -36,25 +36,25 @@ Sub ParseExternalChargeRow(ws As Worksheet, rowNum As Integer, collection As Ext
     
     ' Récupérer les valeurs des colonnes
     prestation = ws.Cells(rowNum, 1).value
-    idEOTP = ws.Cells(rowNum, 2).value
-    montantAnnuel = CDbl(Replace(ws.Cells(rowNum, 3).value, "€", ""))
-    groupeMarchandise = ws.Cells(rowNum, 4).value
-    fournisseur = ws.Cells(rowNum, 5).value
-    natureComptable = ws.Cells(rowNum, 6).value
-    description = ws.Cells(rowNum, 7).value
+    idEOTP = ws.Cells(rowNum, 3).value
+    montantAnnuel = CDbl(Replace(ws.Cells(rowNum, 4).value, "€", ""))
+    groupeMarchandise = ws.Cells(rowNum, 5).value
+    fournisseur = ws.Cells(rowNum, 6).value
+    natureComptable = ws.Cells(rowNum, 7).value
+    description = ws.Cells(rowNum, 8).value
     
     ' Convertir le taux FR de format % à nombre décimal
     tauxFR = 0
-    If Not IsEmpty(ws.Cells(rowNum, 8).value) Then
-        If InStr(ws.Cells(rowNum, 8).value, "%") > 0 Then
-            tauxFR = CDbl(Replace(ws.Cells(rowNum, 8).value, "%", ""))
+    If Not IsEmpty(ws.Cells(rowNum, 9).value) Then
+        If InStr(ws.Cells(rowNum, 9).value, "%") > 0 Then
+            tauxFR = CDbl(Replace(ws.Cells(rowNum, 9).value, "%", ""))
         Else
-            tauxFR = CDbl(ws.Cells(rowNum, 8).value)
+            tauxFR = CDbl(ws.Cells(rowNum, 9).value)
         End If
     End If
     
     Dim domaineFonctionnel As String
-    domaineFonctionnel = ws.Cells(rowNum, 21).value
+    domaineFonctionnel = ws.Cells(rowNum, 22).value
     
     ' Créer un objet ExternalCharge pour chaque mois avec des montants (colonnes 9 à 20)
     For mois = 1 To 12
@@ -62,12 +62,12 @@ Sub ParseExternalChargeRow(ws As Worksheet, rowNum As Integer, collection As Ext
         montantMois = 0
         
         ' Vérifier si la cellule contient une valeur
-        If Not IsEmpty(ws.Cells(rowNum, 8 + mois).value) Then
+        If Not IsEmpty(ws.Cells(rowNum, 9 + mois).value) Then
             ' Gérer les formats différents (avec ou sans €)
-            If InStr(ws.Cells(rowNum, 8 + mois).value, "€") > 0 Then
-                montantMois = CDbl(Replace(Replace(ws.Cells(rowNum, 8 + mois).value, "€", ""), " ", ""))
+            If InStr(ws.Cells(rowNum, 9 + mois).value, "€") > 0 Then
+                montantMois = CDbl(Replace(Replace(ws.Cells(rowNum, 9 + mois).value, "€", ""), " ", ""))
             Else
-                montantMois = CDbl(ws.Cells(rowNum, 8 + mois).value)
+                montantMois = CDbl(ws.Cells(rowNum, 9 + mois).value)
             End If
             
             ' Ne créer un objet que si des montants sont enregistrés pour ce mois
