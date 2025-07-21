@@ -208,7 +208,7 @@ Sub AddSAPLine(ws As Worksheet, row As Integer, internalHour As internalHour, ac
 End Sub
 
 Function GetCategoryValue() As String
-    ' Récupère la valeur de la cellule B1 de la feuille contenant "Prévisionnel"
+    ' Récupère la valeur de la cellule C1 de la feuille contenant "Prévisionnel"
     Dim categoryValue As String
     Dim prevSheet As Worksheet
     
@@ -217,15 +217,15 @@ Function GetCategoryValue() As String
     
     If Not prevSheet Is Nothing Then
         ' Vérifier si la cellule contient une valeur
-        If Not IsEmpty(prevSheet.Range("B1").Value) Then
-            categoryValue = Trim(prevSheet.Range("B1").Value)
+        If Not IsEmpty(prevSheet.Range("C1").Value) Then
+            categoryValue = Trim(prevSheet.Range("C1").Value)
         Else
             ' Valeur par défaut si la cellule est vide
-            categoryValue = "BUDGET01"
+            categoryValue = "ERROR"
         End If
     Else
         ' Aucune feuille correspondante trouvée, utiliser la valeur par défaut
-        categoryValue = "BUDGET01"
+        categoryValue = "ERROR"
         Debug.Print "Avertissement: Aucune feuille contenant 'Prévisionnel' n'a été trouvée."
     End If
     
@@ -233,7 +233,7 @@ Function GetCategoryValue() As String
 End Function
 
 Function GetPSPSPIDValue() As String
-    ' Récupère la valeur de la cellule B2 de la feuille contenant "Prévisionnel"
+    ' Récupère la valeur de la cellule C2 de la feuille contenant "Prévisionnel"
     Dim pspspidValue As String
     Dim prevSheet As Worksheet
     
@@ -242,15 +242,15 @@ Function GetPSPSPIDValue() As String
     
     If Not prevSheet Is Nothing Then
         ' Vérifier si la cellule contient une valeur
-        If Not IsEmpty(prevSheet.Range("B2").Value) Then
-            pspspidValue = Trim(prevSheet.Range("B2").Value)
+        If Not IsEmpty(prevSheet.Range("C2").Value) Then
+            pspspidValue = Trim(prevSheet.Range("C2").Value)
         Else
             ' Valeur par défaut si la cellule est vide
-            pspspidValue = "USINE3D"
+            pspspidValue = "ERROR"
         End If
     Else
         ' Aucune feuille correspondante trouvée, utiliser la valeur par défaut
-        pspspidValue = "USINE3D"
+        pspspidValue = "ERROR"
         Debug.Print "Avertissement: Aucune feuille contenant 'Prévisionnel' n'a été trouvée."
     End If
     
