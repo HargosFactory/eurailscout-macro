@@ -44,3 +44,12 @@ End Function
 Function InvertDoubleValue(value As Double) As Double
     InvertDoubleValue = -value
 End Function
+
+' Description: Arrondit une valeur à un nombre spécifié de chiffres après la virgule.
+' Parameters:
+'   - value: La valeur à arrondir
+'   - numDigits: Le nombre de chiffres après la virgule (ex: 0, 1, 2, 3, etc.)
+' Returns: La valeur arrondie
+Function RoundToDigits(value As Double, numDigits As Integer) As Double
+    RoundToDigits = Round(value, numDigits)
+End Function

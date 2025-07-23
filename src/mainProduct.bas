@@ -146,6 +146,7 @@ Sub AddSAPLineProduct(ws As Worksheet, row As Integer, product As Product)
     psPspid = GetPSPSPIDValue()
 
     montant = InvertDoubleValue(product.MontantMois)
+    montant = RoundToDigits(montant, 2)
     
     ' Remplir les colonnes
     ws.Cells(row, 1).Value = category ' CATEGORY

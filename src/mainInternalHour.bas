@@ -190,6 +190,7 @@ Sub AddSAPLine(ws As Worksheet, row As Integer, internalHour As internalHour, ac
         montant = internalHour.heuresMois * internalHour.TJM_H * internalHour.tauxFG
     End If
 
+    montant = RoundToDigits(montant, 2)
     category = GetCategoryValue()
     psPspid = GetPSPSPIDValue()
     

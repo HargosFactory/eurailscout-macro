@@ -165,6 +165,7 @@ Sub AddSAPLineExternalCharge(ws As Worksheet, row As Integer, externalCharge As 
         montant = externalCharge.montantMois * externalCharge.tauxFR
     End If
 
+    montant = RoundToDigits(montant, 2)
     category = GetCategoryValue()
     psPspid = GetPSPSPIDValue()
     
