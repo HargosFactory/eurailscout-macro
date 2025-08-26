@@ -122,6 +122,9 @@ Sub ExportExternalChargesToSAP(collection As ExternalChargeCollection, Optional 
     Dim row As Integer
     Dim externalCharge As externalCharge
 
+    ' Initialiser les comptes de transcodification
+    InitAccountTransco ActiveSheet
+
     ' Déterminer la feuille cible
     If targetWorksheet Is Nothing Then
         ' Créer une nouvelle feuille si aucune n'est spécifiée
@@ -140,10 +143,12 @@ Sub ExportExternalChargesToSAP(collection As ExternalChargeCollection, Optional 
     ' Parcourir chaque charge externe et remplir les lignes SAP
     For i = 1 To collection.Count
         Set externalCharge = collection.Item(i)
-        AddSAPLineExternalCharge ws, row, externalCharge, "99991540"
+
+        ' Créer deux lignes pour chaque entrée (une pour chaque compte - nature comptable et FR)
+        AddSAPLineExternalCharge ws, row, externalCharge, externalCharge.NatureComptable
         row = row + 1
 
-        AddSAPLineExternalCharge ws, row, externalCharge, "99991517"
+        AddSAPLineExternalCharge ws, row, externalCharge, globaleAccountTranscoInstance.CompteFRChargesExternes
         row = row + 1
     Next i
 
@@ -159,10 +164,10 @@ Sub AddSAPLineExternalCharge(ws As Worksheet, row As Integer, externalCharge As 
     Dim category As String
     Dim psPspid As String
 
-    If accountNumber = "99991540" Then
-        montant = externalCharge.montantMois
-    Else
+    If accountNumber = globaleAccountTranscoInstance.CompteFRChargesExternes Then
         montant = externalCharge.montantMois * externalCharge.tauxFR
+    Else
+        montant = externalCharge.montantMois
     End If
 
     montant = RoundToDigits(montant, 2)
@@ -176,7 +181,7 @@ Sub AddSAPLineExternalCharge(ws As Worksheet, row As Integer, externalCharge As 
     ws.Cells(row, 4).value = 1000 ' RBUKRS (valeur fixe)
     ws.Cells(row, 5).value = psPspid ' PS_PSPID
     ws.Cells(row, 6).value = externalCharge.idEOTP ' PS_POSID
-    ws.Cells(row, 7).value = externalCharge.natureComptable ' RACCT
+    ws.Cells(row, 7).value = accountNumber ' RACCT
     ws.Cells(row, 8).value = montant ' HSL
     ws.Cells(row, 9).value = "EUR" ' RHCUR (valeur fixe)
     ws.Cells(row, 10).value = externalCharge.fournisseur ' YY1_NatureDeDepense_JEI

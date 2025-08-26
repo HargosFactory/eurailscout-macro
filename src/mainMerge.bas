@@ -6,6 +6,9 @@ Function ExportToSAP(productCollection As ProductCollection, internalHourCollect
     Dim internalHour As InternalHour
     Dim externalCharge As ExternalCharge
 
+    ' Initialiser les comptes de transcodification
+    InitAccountTransco ActiveSheet
+
     ' Déterminer la feuille cible
     If targetWorksheet Is Nothing Then
         ' Créer une nouvelle feuille si aucune n'est spécifiée
@@ -30,19 +33,23 @@ Function ExportToSAP(productCollection As ProductCollection, internalHourCollect
     ' Parcourir chaque heure interne et remplir les lignes SAP
     For i = 1 To internalHourCollection.Count
         Set internalHour = internalHourCollection.Item(i)
-        AddSAPLine ws, row, internalHour, "99991540"
+
+        ' Créer deux lignes pour chaque entrée (une pour chaque compte - personnel et FG)
+        AddSAPLine ws, row, internalHour, globaleAccountTranscoInstance.CompteHeuresDuPersonnel
         row = row + 1
 
-        AddSAPLine ws, row, internalHour, "99991517"
+        AddSAPLine ws, row, internalHour, globaleAccountTranscoInstance.CompteFGHeuresInternes
         row = row + 1
     Next i
     ' Parcourir chaque charge externe et remplir les lignes SAP
     For i = 1 To externalChargeCollection.Count
         Set externalCharge = externalChargeCollection.Item(i)
-        AddSAPLineExternalCharge ws, row, externalCharge, "99991540"
+
+        ' Créer deux lignes pour chaque entrée (une pour chaque compte - nature comptable et FR)
+        AddSAPLineExternalCharge ws, row, externalCharge, externalCharge.NatureComptable
         row = row + 1
 
-        AddSAPLineExternalCharge ws, row, externalCharge, "99991517"
+        AddSAPLineExternalCharge ws, row, externalCharge, globaleAccountTranscoInstance.CompteFRChargesExternes
         row = row + 1
     Next i
 

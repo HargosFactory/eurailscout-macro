@@ -104,6 +104,9 @@ Sub ExportInternalHoursToSAP(collection As InternalHourCollection, Optional targ
     Dim row As Integer
     Dim i As Integer
     Dim internalHour As internalHour
+
+    ' Initialiser les comptes de transcodification
+    InitAccountTransco ActiveSheet
     
     ' Déterminer la feuille cible
     If targetWorksheet Is Nothing Then
@@ -123,12 +126,12 @@ Sub ExportInternalHoursToSAP(collection As InternalHourCollection, Optional targ
     ' Parcourir la collection et ajouter les lignes
     For i = 1 To collection.Count
         Set internalHour = collection.Item(i)
-        
-        ' Créer deux lignes pour chaque entrée (une pour 99991540 et une pour 99991517)
-        AddSAPLine ws, row, internalHour, "99991540"
+
+        ' Créer deux lignes pour chaque entrée (une pour chaque compte - personnel et FG)
+        AddSAPLine ws, row, internalHour, globaleAccountTranscoInstance.CompteHeuresDuPersonnel
         row = row + 1
-        
-        AddSAPLine ws, row, internalHour, "99991517"
+
+        AddSAPLine ws, row, internalHour, globaleAccountTranscoInstance.CompteFGHeuresInternes
         row = row + 1
     Next i
     
@@ -184,7 +187,7 @@ Sub AddSAPLine(ws As Worksheet, row As Integer, internalHour As internalHour, ac
     Dim category As String
     Dim psPspid As String
 
-    If accountNumber = "99991540" Then
+    If accountNumber = globaleAccountTranscoInstance.CompteFGHeuresInternes Then
         montant = internalHour.heuresMois * internalHour.TJM_H
     Else
         montant = internalHour.heuresMois * internalHour.TJM_H * internalHour.tauxFG
